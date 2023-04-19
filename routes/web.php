@@ -61,3 +61,7 @@ Route::get('home',[Member::class,'homeScreen']);
 Route::get('newElection',[Member::class,'newElectionScreen']);
 
 Route::get('results',[Member::class,'results']);
+
+Route::get('vote/{id}',[Member::class,'voteScreen']);
+
+Route::get('voteForCan/{id}',[Member::class,'vote']);

@@ -29,9 +29,10 @@
 
         <!-- Nav Item - Tables -->
         <li class="nav-item">
-            <a class="nav-link" href="" data-toggle="modal" data-target="#logoutModal">
-                <i class="fas fa-fw fa-sign-out-alt"></i>
-                <span>Logout</span></a>
+            <a class="nav-link" href="{{url('logout')}}">
+               <i class="fas fa-sign-out-alt"></i>
+                Logout
+            </a>
         </li>
 
         <!-- Divider -->

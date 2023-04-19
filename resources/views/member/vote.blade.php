@@ -23,39 +23,47 @@
 
                 <!-- Page Heading -->
                 <div class="d-sm-flex align-items-center justify-content-between mb-4">
-                    <h1 class="h3 mb-0 text-gray-800">New Election</h1>
+                    <h1 class="h3 mb-0 text-gray-800">Home</h1>
 
                 </div>
 
-
-                <!-- Content Row -->
-                <div class="row">
-                    <table class="table">
+                <div class="container-fluid px-4">
+                    <h1 class="mt-4">{{$election[0]->election_topic}}</h1>
+                    <br>
+                    <table class="table table-striped">
                         <thead>
                         <tr>
-                            <th scope="col">#</th>
-                            <th scope="col">Election</th>
                             <th scope="col"></th>
+                            <th scope="col">Candidate</th>
+                            <th scope="col">Name</th>
+                            <th scope="col">Phone</th>
+                            <th scope="col">Address</th>
+                            <th scope="col">Description</th>
+                            <th scope="col">Vote</th>
                         </tr>
                         </thead>
                         <tbody>
-                        @php($i = 1)
-                        @foreach($elecs as $e)
+                        @foreach($election as $e)
                             <tr>
-                                <th scope="row">{{$i}}</th>
-                                <td>{{$e->topic}}</td>
+                                <td></td>
                                 <td>
-                                    <a href="{{url("vote/$e->id")}}" class="btn btn-primary btn-icon-split"
-                                       style="width: 100px">Vote</a>
+                                    <img class="img-fluid rounded" src="{{ $e->photo }}"
+                                         style="height: 100px;width:100px" alt="">
+                                </td>
+                                <td>{{$e->candidate_name}}</td>
+                                <td>{{$e->phone}}</td>
+                                <td>{{$e->address}}</td>
+                                <td>{{$e->description}}</td>
+                                <td>
+                                    <a href="{{url("voteForCan/$e->id")}}?electionID={{$e->electionID}}" class="btn btn-primary btn-icon-split">
+                                        <i class="fas fa-fw fa-check"></i> </a>
                                 </td>
                             </tr>
-                            @php($i++)
+
                         @endforeach
                         </tbody>
                     </table>
-
                 </div>
-
             </div>
             <!-- /.container-fluid -->
 
@@ -91,7 +99,7 @@
             <div class="modal-body">Select "Logout" below if you are ready to end your current session.</div>
             <div class="modal-footer">
                 <button class="btn btn-secondary" type="button" data-dismiss="modal">Cancel</button>
-                <a class="btn btn-primary" href="login.html">Logout</a>
+                <a class="btn btn-primary" href="">Logout</a>
             </div>
         </div>
     </div>

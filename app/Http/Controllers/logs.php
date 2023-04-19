@@ -17,6 +17,7 @@ class logs extends Controller
     {
         $user = DB::table('users')->where('username', $request->username)->first();
         if ($user->password == $request->password) {
+            $request->session()->put('userID', $user->id);
             if ($user->type)
                 return redirect('dashboard');
             else
