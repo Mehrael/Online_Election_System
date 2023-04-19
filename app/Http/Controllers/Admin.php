@@ -15,17 +15,17 @@ class Admin extends Controller
 
     public function addAdminScreen()
     {
-        $show_username =true;
+        $show_username = true;
         $show_password = true;
-        return view("admin.addAdmin", compact('show_username','show_password'));
+        return view("admin.addAdmin", compact('show_username', 'show_password'));
     }
 
     public function addAdmin(Request $request)
     {
         $request->validate([
-            "username"=>"required",
-            "password"=> "required",
-            "confirmPassword"=>"required"
+            "username" => "required",
+            "password" => "required",
+            "confirmPassword" => "required"
         ]);
 
         $username = $request->username;
@@ -33,22 +33,20 @@ class Admin extends Controller
 
         $show_username = true;
         $show_password = true;
-        if(DB::table('users')->where('username',$username)->exists())
-        {
-            $show_username =false;
-            return view("admin.addAdmin", compact('show_username','show_password'));
+        if (DB::table('users')->where('username', $username)->exists()) {
+            $show_username = false;
+            return view("admin.addAdmin", compact('show_username', 'show_password'));
         }
 
-        if($password != $request->confirmPassword)
-        {
+        if ($password != $request->confirmPassword) {
             $show_password = false;
-            return view("admin.addAdmin", compact('show_username','show_password'));
+            return view("admin.addAdmin", compact('show_username', 'show_password'));
         }
 
         DB::table('users')->insert([
-            "username"=>$username,
-            "password"=>$password,
-            "type"=>1
+            "username" => $username,
+            "password" => $password,
+            "type" => 1
         ]);
 
         return redirect("viewAdmins");
@@ -56,7 +54,40 @@ class Admin extends Controller
 
     public function viewAdmins()
     {
-        $admins = DB::table('users')->where('type','=',1)->get();
-        return view("admin.viewAdmins",compact('admins'));
+        $admins = DB::table('users')->where('type', '=', 1)->get();
+        return view("admin.viewAdmins", compact('admins'));
+    }
+
+    public function addCandidateScreen()
+    {
+        return view('admin.addCandidate');
+    }
+
+    public function addCandidate(Request $request)
+    {
+        $name = $request->name;
+        $phone = $request->phone;
+        $address = $request->address;
+        $desc = $request->desc;
+
+        $photo = $request->file('photo');
+        $img_name = time() . $photo;
+        $path = $photo->move('uploads', $img_name);
+        $path = '\\' . $path;
+
+        DB::table('candidates')->insert([
+            "name" => $name,
+            "phone" => $phone,
+            "address" => $address,
+            "photo" => $path,
+            "description" => $desc
+        ]);
+        return redirect('viewCandidate');
+    }
+
+    public function viewCandidate()
+    {
+        $cans = DB::table('candidates')->get();
+        return view('admin.viewCandidate', compact('cans'));
     }
 }

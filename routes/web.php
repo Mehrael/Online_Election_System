@@ -25,3 +25,9 @@ Route::get('addNewAdmin', [Admin::class, 'addAdminScreen']);
 Route::post('addAdmin',[Admin::class, 'addAdmin']);
 
 Route::get('viewAdmins', [Admin::class, 'viewAdmins']);
+
+Route::get('addNewCandidate', [Admin::class, 'addCandidateScreen']);
+
+Route::post('addCandidate', [Admin::class, 'addCandidate']);
+
+Route::get('viewCandidate', [Admin::class, 'viewCandidate']);

@@ -25,8 +25,8 @@
                             <a class="nav-link" href="{{url('viewAdmins')}}">View Admins</a>
                         </nav>
                     </div>
-                    <a class="nav-link collapsed" href="#" data-bs-toggle="collapse" data-bs-target="#collapseLayouts"
-                       aria-expanded="false" aria-controls="collapseLayouts">
+                    <a class="nav-link collapsed" href="#" data-bs-toggle="collapse" data-bs-target="#collapses"
+                       aria-expanded="false" aria-controls="collapses">
                         <div class="sb-nav-link-icon">
                             <i class="fas fa-user-alt"></i>
                         </div>
@@ -40,10 +40,10 @@
                             </svg>
                         </div>
                     </a>
-                    <div class="collapse" id="collapseLayouts" aria-labelledby="headingOne"
+                    <div class="collapse" id="collapses" aria-labelledby="headingOne"
                          data-bs-parent="#sidenavAccordion">
                         <nav class="sb-sidenav-menu-nested nav">
-                            <a class="nav-link" href="">Add New Candidate</a>
+                            <a class="nav-link" href="{{url('addNewCandidate')}}">Add New Candidate</a>
                             <a class="nav-link" href="">View Candidates</a>
                         </nav>
                     </div>
