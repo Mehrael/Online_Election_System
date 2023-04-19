@@ -6,36 +6,32 @@
     <div id="layoutSidenav_content">
         <main>
             <div class="container-fluid px-4">
-                <h1 class="mt-4">View Candidates</h1>
+                <h1 class="mt-4">{{$election[0]->election_topic}}</h1>
                 <br>
                 <table class="table table-striped">
                     <thead>
                     <tr>
-                        <th scope="col">#</th>
+                        <th scope="col"></th>
+                        <th scope="col">Candidate</th>
                         <th scope="col">Name</th>
                         <th scope="col">Phone</th>
                         <th scope="col">Address</th>
                         <th scope="col">Description</th>
-                        <th scope="col">Photo</th>
                     </tr>
                     </thead>
                     <tbody>
-                    @php($i = 1)
-                    @foreach($cans as $user)
+                    @foreach($election as $e)
                         <tr>
-                            <th scope="row">{{$i}}</th>
-                            <td>{{$user->name}}</td>
-                            <td>{{$user->phone}}</td>
-                            <td>{{$user->address}}</td>
-                            <td>{{$user->description}}</td>
+                            <td></td>
                             <td>
-                                <div class="flex-shrink-0">
-                                    <img class="img-fluid rounded" src="{{ $user->photo }}"
-                                         style="height: 100px;width:100px">
-                                </div>
+                                <img class="img-fluid rounded" src="{{ $e->photo }}" style="height: 100px;width:100px" alt="">
                             </td>
+                            <td>{{$e->candidate_name}}</td>
+                            <td>{{$e->phone}}</td>
+                            <td>{{$e->address}}</td>
+                            <td>{{$e->description}}</td>
                         </tr>
-                        @php($i++)
+
                     @endforeach
                     </tbody>
                 </table>

@@ -90,4 +90,62 @@ class Admin extends Controller
         $cans = DB::table('candidates')->get();
         return view('admin.viewCandidate', compact('cans'));
     }
+
+    public function addElectionScreen()
+    {
+        $numOfCans = DB::table('candidates')->count();
+        $cans = DB::table('candidates')->get();
+        return view('admin.addNewElection', compact('numOfCans', 'cans'));
+    }
+
+    public function addElection(Request $request)
+    {
+        $topic = $request->topic;
+        $numOfCans = $request->myVariable;
+
+        $ElectionID = DB::table('elections')->insertGetId([
+            "topic" => $topic,
+            "numOfCandidates" => $numOfCans,
+            "stillAvailable" => 1
+        ]);
+
+        for ($i = 1; $i <= $numOfCans; $i++) {
+            $selectedOption = $request->input('select-' . $i);
+            if ($selectedOption !== null) {
+                DB::table('votes')->insert([
+                    "electionID" => $ElectionID,
+                    "candidateID" => $selectedOption,
+                    "numOfVotes" => 0
+                ]);
+            }
+        }
+        return redirect("viewElections");
+    }
+
+    public function viewElections()
+    {
+        $elections = DB::table('elections')->get();
+        return view('admin.viewElections',compact('elections'));
+    }
+
+    public function viewElection($id)
+    {
+        $election = DB::table('votes')
+            ->join('elections', 'votes.electionID', '=', 'elections.id')
+            ->join('candidates', 'votes.candidateID', '=', 'candidates.id')
+            ->where('votes.electionID', '=', $id)
+            ->selectRaw('*, elections.topic as election_topic, candidates.name as candidate_name')
+            ->get();
+
+
+        return view('admin.viewElection',compact('election'));
+    }
+
+    public function endElection($id)
+    {
+        DB::table('elections')->where('id',$id)->update([
+            "stillAvailable" =>0,
+        ]);
+        return redirect('viewElections');
+    }
 }

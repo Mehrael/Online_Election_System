@@ -44,7 +44,7 @@
                          data-bs-parent="#sidenavAccordion">
                         <nav class="sb-sidenav-menu-nested nav">
                             <a class="nav-link" href="{{url('addNewCandidate')}}">Add New Candidate</a>
-                            <a class="nav-link" href="">View Candidates</a>
+                            <a class="nav-link" href="{{url('viewCandidate')}}">View Candidates</a>
                         </nav>
                     </div>
                     <a class="nav-link collapsed" href="#" data-bs-toggle="collapse" data-bs-target="#pagesCollapseAuth"
@@ -65,8 +65,8 @@
                     <div class="collapse" id="pagesCollapseAuth" aria-labelledby="headingOne"
                          data-bs-parent="#sidenavAccordionPages">
                         <nav class="sb-sidenav-menu-nested nav">
-                            <a class="nav-link" href="">Add New Election</a>
-                            <a class="nav-link" href="">View Elections</a>
+                            <a class="nav-link" href="{{url('addNewElection')}}">Add New Election</a>
+                            <a class="nav-link" href="{{url('viewElections')}}">View Elections</a>
                         </nav>
                     </div>
                     <a class="nav-link" href="">

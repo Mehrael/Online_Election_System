@@ -39,7 +39,7 @@
                                 </div>
                                 <div class="col-md-12 mb-3">
                                     <label for="validationTextarea">Description</label>
-                                    <textarea  class="form-control is-invalid" id="validationTextarea" name="desc" required>
+                                    <textarea  class="form-control" id="validationTextarea" name="desc" required>
                                     </textarea>
                                 </div>
                             </div>

@@ -31,3 +31,13 @@ Route::get('addNewCandidate', [Admin::class, 'addCandidateScreen']);
 Route::post('addCandidate', [Admin::class, 'addCandidate']);
 
 Route::get('viewCandidate', [Admin::class, 'viewCandidate']);
+
+Route::get('addNewElection', [Admin::class, 'addElectionScreen']);
+
+Route::post('addElection', [Admin::class, 'addElection']);
+
+Route::get('viewElections', [Admin::class, 'viewElections']);
+
+Route::get('viewElection/{id}', [Admin::class, 'viewElection']);
+
+Route::get('endElection/{id}', [Admin::class, 'endElection']);
