@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\Models\User;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
 
 class Admin extends Controller
@@ -106,7 +107,8 @@ class Admin extends Controller
         $ElectionID = DB::table('elections')->insertGetId([
             "topic" => $topic,
             "numOfCandidates" => $numOfCans,
-            "stillAvailable" => 1
+            "stillAvailable" => 1,
+            "whoWon"=>""
         ]);
 
         for ($i = 1; $i <= $numOfCans; $i++) {
@@ -147,5 +149,63 @@ class Admin extends Controller
             "stillAvailable" =>0,
         ]);
         return redirect('viewElections');
+    }
+
+    public function calcResultScreen()
+    {
+        $elecs = DB::table('elections')
+            ->where('elections.stillAvailable', '=', 0)
+            ->selectRaw('*, elections.topic as election_topic')
+            ->get();
+        return view('admin.CalculateResults',compact('elecs'));
+    }
+
+    public function calcResult($id)
+    {
+        $maxVotes = DB::table('votes')
+            ->select('electionID', DB::raw('max(numOfVotes) as max_votes'))
+            ->where('electionID', '=', $id)
+            ->groupBy('electionID')
+            ->first();
+
+        $winner = DB::table('candidates')->where('id',$maxVotes->electionID)->first();
+
+        DB::table('elections')->where('id',$id)->update([
+            "whoWon"=> $winner->name
+        ]);
+
+        $elecs = DB::table('votes')
+            ->join('elections', 'votes.electionID', '=', 'elections.id')
+            ->join('candidates', 'votes.candidateID', '=', 'candidates.id')
+            ->where('elections.stillAvailable', '=', 0)
+            ->selectRaw('*, elections.topic as election_topic, candidates.name as candidate_name')
+            ->get();
+
+        return view('admin.CalculateResults',compact('elecs'));
+    }
+
+    public function login()
+    {
+        return view("login");
+    }
+
+    public function loginRequest(Request $request)
+    {
+        $data = [
+            "username" => $request->username,
+            "password" => $request->password
+        ];
+
+        if(Auth::attempt($data))
+        {
+            return redirect('admin.dashboard');
+        }
+        return redirect("login");
+    }
+
+    public function logout()
+    {
+        Auth::logout();
+        return redirect('/login');
     }
 }

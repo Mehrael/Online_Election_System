@@ -16,6 +16,7 @@ return new class extends Migration
             $table->string("topic");
             $table->integer("numOfCandidates");
             $table->integer("stillAvailable"); // 1 if yes, 0 if ended
+            $table->string("whoWon");
         });
     }
 

@@ -2,6 +2,7 @@
 
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\Admin;
+use Illuminate\Support\Facades\Auth;
 
 /*
 |--------------------------------------------------------------------------
@@ -14,30 +15,39 @@ use App\Http\Controllers\Admin;
 |
 */
 //
-//Route::get('/', function () {
-//    return view('admin.dashboard');
-//});
+Route::get('login', [admin::class, 'login']);
 
-Route::get('dashboard', [Admin::class, 'index']);
+Route::post('loginRequest', [admin::class, 'loginRequest']);
 
-Route::get('addNewAdmin', [Admin::class, 'addAdminScreen']);
+Route::group(['middleware' => 'auth'], function () {
 
-Route::post('addAdmin',[Admin::class, 'addAdmin']);
+    Route::get('dashboard', [Admin::class, 'index']);
 
-Route::get('viewAdmins', [Admin::class, 'viewAdmins']);
+    Route::get('addNewAdmin', [Admin::class, 'addAdminScreen']);
 
-Route::get('addNewCandidate', [Admin::class, 'addCandidateScreen']);
+    Route::post('addAdmin', [Admin::class, 'addAdmin']);
 
-Route::post('addCandidate', [Admin::class, 'addCandidate']);
+    Route::get('viewAdmins', [Admin::class, 'viewAdmins']);
 
-Route::get('viewCandidate', [Admin::class, 'viewCandidate']);
+    Route::get('addNewCandidate', [Admin::class, 'addCandidateScreen']);
 
-Route::get('addNewElection', [Admin::class, 'addElectionScreen']);
+    Route::post('addCandidate', [Admin::class, 'addCandidate']);
 
-Route::post('addElection', [Admin::class, 'addElection']);
+    Route::get('viewCandidate', [Admin::class, 'viewCandidate']);
 
-Route::get('viewElections', [Admin::class, 'viewElections']);
+    Route::get('addNewElection', [Admin::class, 'addElectionScreen']);
 
-Route::get('viewElection/{id}', [Admin::class, 'viewElection']);
+    Route::post('addElection', [Admin::class, 'addElection']);
 
-Route::get('endElection/{id}', [Admin::class, 'endElection']);
+    Route::get('viewElections', [Admin::class, 'viewElections']);
+
+    Route::get('viewElection/{id}', [Admin::class, 'viewElection']);
+
+    Route::get('endElection/{id}', [Admin::class, 'endElection']);
+
+    Route::get('calcResult', [Admin::class, 'calcResultScreen']);
+
+    Route::get('calcResult/{id}', [Admin::class, 'calcResult']);
+
+    Route::get('logout', [admin::class, 'logout']);
+});

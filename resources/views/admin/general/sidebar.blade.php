@@ -69,11 +69,11 @@
                             <a class="nav-link" href="{{url('viewElections')}}">View Elections</a>
                         </nav>
                     </div>
-                    <a class="nav-link" href="">
+                    <a class="nav-link" href="{{url('calcResult')}}">
                         <div class="sb-nav-link-icon"><i class="fas fa-calculator"></i></div>
                         Calculate Results
                     </a>
-                    <a class="nav-link" href="">
+                    <a class="nav-link" href="{{url('logout')}}">
                         <div class="sb-nav-link-icon"><i class="fas fa-sign-out-alt"></i></div>
                         Logout
                     </a>
