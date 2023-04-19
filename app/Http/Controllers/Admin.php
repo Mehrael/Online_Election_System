@@ -108,7 +108,7 @@ class Admin extends Controller
             "topic" => $topic,
             "numOfCandidates" => $numOfCans,
             "stillAvailable" => 1,
-            "whoWon"=>""
+            "whoWon" => ""
         ]);
 
         for ($i = 1; $i <= $numOfCans; $i++) {
@@ -127,7 +127,7 @@ class Admin extends Controller
     public function viewElections()
     {
         $elections = DB::table('elections')->get();
-        return view('admin.viewElections',compact('elections'));
+        return view('admin.viewElections', compact('elections'));
     }
 
     public function viewElection($id)
@@ -140,13 +140,13 @@ class Admin extends Controller
             ->get();
 
 
-        return view('admin.viewElection',compact('election'));
+        return view('admin.viewElection', compact('election'));
     }
 
     public function endElection($id)
     {
-        DB::table('elections')->where('id',$id)->update([
-            "stillAvailable" =>0,
+        DB::table('elections')->where('id', $id)->update([
+            "stillAvailable" => 0,
         ]);
         return redirect('viewElections');
     }
@@ -157,31 +157,23 @@ class Admin extends Controller
             ->where('elections.stillAvailable', '=', 0)
             ->selectRaw('*, elections.topic as election_topic')
             ->get();
-        return view('admin.CalculateResults',compact('elecs'));
+        return view('admin.CalculateResults', compact('elecs'));
     }
 
     public function calcResult($id)
     {
-        $maxVotes = DB::table('votes')
-            ->select('electionID', DB::raw('max(numOfVotes) as max_votes'))
-            ->where('electionID', '=', $id)
-            ->groupBy('electionID')
-            ->first();
+        $maxVotes = DB::table('votes')->where('electionID', '=', $id)
+            ->max("numOfVotes");
 
-        $winner = DB::table('candidates')->where('id',$maxVotes->electionID)->first();
+        $can = DB::table('votes')->where('electionID', '=', $id)->where('numOfVotes', '=', $maxVotes)->first();
+        $winner = DB::table('candidates')->where('id', $can->candidateID)->first();
 
-        DB::table('elections')->where('id',$id)->update([
-            "whoWon"=> $winner->name
+
+        DB::table('elections')->where('id', $id)->update([
+            "whoWon" => $winner->name
         ]);
 
-        $elecs = DB::table('votes')
-            ->join('elections', 'votes.electionID', '=', 'elections.id')
-            ->join('candidates', 'votes.candidateID', '=', 'candidates.id')
-            ->where('elections.stillAvailable', '=', 0)
-            ->selectRaw('*, elections.topic as election_topic, candidates.name as candidate_name')
-            ->get();
-
-        return view('admin.CalculateResults',compact('elecs'));
+        return redirect("calcResult");
     }
 
     public function logout()
