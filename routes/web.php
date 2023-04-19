@@ -1,5 +1,8 @@
 <?php
 
+use App\Http\Controllers\Controller;
+use App\Http\Controllers\logs;
+use App\Http\Controllers\Member;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\Admin;
 use Illuminate\Support\Facades\Auth;
@@ -14,12 +17,10 @@ use Illuminate\Support\Facades\Auth;
 | be assigned to the "web" middleware group. Make something great!
 |
 */
-//
-Route::get('login', [admin::class, 'login']);
 
-Route::post('loginRequest', [admin::class, 'loginRequest']);
+Route::get('/', [logs::class, 'login']);
 
-Route::group(['middleware' => 'auth'], function () {
+Route::post('loginRequest', [logs::class, 'loginRequest']);
 
     Route::get('dashboard', [Admin::class, 'index']);
 
@@ -50,4 +51,9 @@ Route::group(['middleware' => 'auth'], function () {
     Route::get('calcResult/{id}', [Admin::class, 'calcResult']);
 
     Route::get('logout', [admin::class, 'logout']);
-});
+
+Route::get('register',[Member::class,'registerScreen']);
+
+Route::post('registerNewUser',[Member::class,'register']);
+
+Route::get('home',[Member::class,'homeScreen']);

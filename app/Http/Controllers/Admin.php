@@ -184,28 +184,9 @@ class Admin extends Controller
         return view('admin.CalculateResults',compact('elecs'));
     }
 
-    public function login()
-    {
-        return view("login");
-    }
-
-    public function loginRequest(Request $request)
-    {
-        $data = [
-            "username" => $request->username,
-            "password" => $request->password
-        ];
-
-        if(Auth::attempt($data))
-        {
-            return redirect('admin.dashboard');
-        }
-        return redirect("login");
-    }
-
     public function logout()
     {
         Auth::logout();
-        return redirect('/login');
+        return redirect('/');
     }
 }
