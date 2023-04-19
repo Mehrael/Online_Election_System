@@ -48,4 +48,14 @@ class Member extends Controller
     {
         return view('member.home');
     }
+
+    public function newElectionScreen()
+    {
+        return view('member.newElection');
+    }
+    public function results()
+    {
+        $res = DB::table('elections')->where('stillAvailable',0)->get();
+        return view('member.results',compact('res'));
+    }
 }

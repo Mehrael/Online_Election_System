@@ -57,3 +57,7 @@ Route::get('register',[Member::class,'registerScreen']);
 Route::post('registerNewUser',[Member::class,'register']);
 
 Route::get('home',[Member::class,'homeScreen']);
+
+Route::get('newElection',[Member::class,'newElectionScreen']);
+
+Route::get('results',[Member::class,'results']);

@@ -12,14 +12,14 @@
 
         <!-- Nav Item - Dashboard -->
         <li class="nav-item active">
-            <a class="nav-link" href="">
+            <a class="nav-link" href="{{url('newElection')}}">
                 <i class="fas fa-fw fa-check-circle"></i>
                 <span>New Election</span></a>
         </li>
 
         <!-- Nav Item - Dashboard -->
         <li class="nav-item active">
-            <a class="nav-link" href="">
+            <a class="nav-link" href="{{url('results')}}">
                 <i class="fas fa-fw fa-poll"></i>
                 <span>Results</span></a>
         </li>
